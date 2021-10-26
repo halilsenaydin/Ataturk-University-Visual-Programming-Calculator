@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results.Abstracts;
 using Core.Utilities.Results.Concretes;
+using Entities.Concretes;
 using Operations.Abstracts;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,10 @@ namespace Operations.Concretes
         private double previousNumber { get; set; }
         private double newNumber { get; set; }
 
-        private int numberOfTransactionsMade { get; set; }
+        private int counter { get; set; }
 
         public OperationManager()
         {
-            _result = 0;
         }
 
         public double GetResult() // Encapsulation
@@ -35,12 +35,17 @@ namespace Operations.Concretes
         public void ClearResult()
         {
             _result = 0;
-            numberOfTransactionsMade = 0;
+            counter = 0;
+        }
+
+        public void CalculatePreviousOperation(Operation operation)
+        {
+
         }
 
         public IDataResult<double> Adding(double number)
         {
-            numberOfTransactionsMade++;
+            counter++;
             previousNumber = newNumber;
             newNumber = number;
 
@@ -50,31 +55,47 @@ namespace Operations.Concretes
 
         public IDataResult<double> Division(double number) 
         {
-            numberOfTransactionsMade++;
-            _number = number;
+            previousNumber = newNumber;
+            newNumber = number;
+
+            if (counter == 0)
+            {
+                _result = newNumber;
+                counter++;
+                return new SuccessDataResult<double>(_result);
+            }
+
+            counter++;
+            _number = newNumber;
             _result /= _number;
             return new SuccessDataResult<double>(_result);
         }
 
         public IDataResult<double> Multiplication(double number)
         {
-            if (numberOfTransactionsMade == 0)
+            if (counter == 0)
             {
                 _result = 1;
             }
 
-            numberOfTransactionsMade++;
+            counter++;
             _number = number;
-
             _result *= _number;
             return new SuccessDataResult<double>(_result);
         }
 
         public IDataResult<double> Subtraction(double number)
         {
+            if (counter == 0)
+            {
+                _result = number;
+                counter++;
+                return new SuccessDataResult<double>(_result);
+            }
+
+            counter++;
             _number = number;
-            var result = Adding((_number)*-1);
-            _result = result.Data;
+            _result -= _number;
 
             return new SuccessDataResult<double>(_result);
         }
