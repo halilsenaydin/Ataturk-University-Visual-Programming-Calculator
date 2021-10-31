@@ -1,4 +1,6 @@
-﻿using Operations.Abstracts;
+﻿using Entities.Abstracts;
+using Entities.Concretes;
+using Operations.Abstracts;
 using Operations.Concretes;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace CalculatorUI.Forms
         }
 
         private List<string> inputs = new List<string>();
+        private List<double> numbers = new List<double>();
         IOperationService operationService = new OperationManager();
 
         private void Intro_Load(object sender, EventArgs e)
@@ -60,7 +63,7 @@ namespace CalculatorUI.Forms
             inputs.Add(number);
         }
 
-        double GetNumber()
+        double GetNumber() // Girilen sayıları uygun formatda al ve işlenebilecek hale çevir.
         {
             string numberText = "";
             foreach (var item in inputs)
@@ -68,8 +71,13 @@ namespace CalculatorUI.Forms
                 numberText += item;
             }
 
-            var number = Convert.ToDouble(numberText);
-            return number;
+            if (numberText != "")
+            {
+                var number = Convert.ToDouble(numberText);
+                numbers.Add(number);
+            }
+
+            return numbers[numbers.Count-1];
         }
 
         private void btnAddition_Click(object sender, EventArgs e)
@@ -77,13 +85,13 @@ namespace CalculatorUI.Forms
             var number = GetNumber(); // Get Number
             var result = operationService.Adding(number);
 
-            lblInput.Text += "+";
             if (result.Success)
             {
+                lblInput.Text = String.Format("{0} + ", result.Data);
                 inputs.Clear();
                 lblResult.Text = result.Data.ToString();
             }
-
+            
             else
             {
                 MessageBox.Show(result.Message);
@@ -95,9 +103,9 @@ namespace CalculatorUI.Forms
             var number = GetNumber(); // Get Number
             var result = operationService.Subtraction(number);
 
-            lblInput.Text += "-";
             if (result.Success)
             {
+                lblInput.Text = String.Format("{0} - ", result.Data);
                 inputs.Clear();
                 lblResult.Text = result.Data.ToString();
             }
@@ -113,9 +121,9 @@ namespace CalculatorUI.Forms
             var number = GetNumber(); // Get Number
             var result = operationService.Multiplication(number);
 
-            lblInput.Text += "*";
             if (result.Success)
             {
+                lblInput.Text = String.Format("{0} * ", result.Data);
                 inputs.Clear();
                 lblResult.Text = result.Data.ToString();
             }
@@ -131,9 +139,9 @@ namespace CalculatorUI.Forms
             var number = GetNumber(); // Get Number
             var result = operationService.Division(number);
 
-            lblInput.Text += "/";
             if (result.Success)
             {
+                lblInput.Text = String.Format("{0} / ", result.Data);
                 inputs.Clear();
                 lblResult.Text = result.Data.ToString();
             }
@@ -144,11 +152,72 @@ namespace CalculatorUI.Forms
             }
         }
 
+        private void btnInversion_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Inversion(number);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
+        private void btnExponentOfTwo_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Pow(number);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
+        private void btnSqrt_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Root(number);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
         private void btnEquals_Click(object sender, EventArgs e)
         {
+            var number = GetNumber();
             inputs.Clear();
-            lblResult.Text = operationService.GetResult().ToString();
-            lblInput.Text = operationService.GetResult().ToString();
+            var result = operationService.Equals(number);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                lblResult.Text = result.Data.ToString();
+                lblInput.Text = result.Data.ToString();
+            }
         }
 
         private void btnDel_Click(object sender, EventArgs e)
@@ -159,7 +228,7 @@ namespace CalculatorUI.Forms
             lblInput.Text = text;
         }
 
-        private void btnInputAndResult_Click(object sender, EventArgs e)
+        private void btnInputAndResultClear_Click(object sender, EventArgs e)
         {
             operationService.ClearResult();
             inputs.Clear();

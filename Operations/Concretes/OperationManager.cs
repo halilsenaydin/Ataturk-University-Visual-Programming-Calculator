@@ -1,5 +1,7 @@
-﻿using Core.Utilities.Results.Abstracts;
+﻿using Core.Utilities;
+using Core.Utilities.Results.Abstracts;
 using Core.Utilities.Results.Concretes;
+using Entities.Abstracts;
 using Entities.Concretes;
 using Operations.Abstracts;
 using System;
@@ -10,17 +12,9 @@ namespace Operations.Concretes
 {
     public class OperationManager : IOperationService
     {
-        public double _number { get; set; }
         private double _result { get; set; }
-
-        private double previousNumber { get; set; }
-        private double newNumber { get; set; }
-
+        private Operation _previousOperation { get; set; }
         private int counter { get; set; }
-
-        public OperationManager()
-        {
-        }
 
         public double GetResult() // Encapsulation
         {
@@ -38,65 +32,178 @@ namespace Operations.Concretes
             counter = 0;
         }
 
-        public void CalculatePreviousOperation(Operation operation)
+        public IResult CalculatePreviousOperation(Operation operation)
         {
+            if (counter == 0) // İlk işlem ise önceki işlem ataması yap.
+            {
+                _previousOperation = operation;
+                return new SuccessResult();
+            }
 
+            // Get Numbers
+            _previousOperation.number1 = this._result;
+            _previousOperation.number2 = operation.number2;
+
+            // Process And Return
+            var result = _previousOperation.Process();
+            if (!result.Success)
+            {
+                return new ErrorResult(result.Message);
+            }
+            _result = result.Data;
+            _previousOperation = operation; // Get reference of process
+            return new SuccessResult();
         }
 
         public IDataResult<double> Adding(double number)
         {
-            counter++;
-            previousNumber = newNumber;
-            newNumber = number;
+            Operation newOperation = new Adding(number);
+            var previousOperation = CalculatePreviousOperation(newOperation);
+            if (!previousOperation.Success)
+            {
+                return new ErrorDataResult<double>(previousOperation.Message);
+            }
 
-            _result += newNumber;
-            return new SuccessDataResult<double>(_result);
-        }
-
-        public IDataResult<double> Division(double number) 
-        {
-            previousNumber = newNumber;
-            newNumber = number;
-
+            // İlk işlem ise sonuç girilen sayıdır.
             if (counter == 0)
             {
-                _result = newNumber;
                 counter++;
-                return new SuccessDataResult<double>(_result);
+                _result = number;
             }
 
-            counter++;
-            _number = newNumber;
-            _result /= _number;
-            return new SuccessDataResult<double>(_result);
-        }
-
-        public IDataResult<double> Multiplication(double number)
-        {
-            if (counter == 0)
-            {
-                _result = 1;
-            }
-
-            counter++;
-            _number = number;
-            _result *= _number;
             return new SuccessDataResult<double>(_result);
         }
 
         public IDataResult<double> Subtraction(double number)
         {
-            if (counter == 0)
+            Operation newOperation = new Subtraction(number);
+            var previousOperation = CalculatePreviousOperation(newOperation);
+            if (!previousOperation.Success)
             {
-                _result = number;
-                counter++;
-                return new SuccessDataResult<double>(_result);
+                return new ErrorDataResult<double>(previousOperation.Message);
             }
 
-            counter++;
-            _number = number;
-            _result -= _number;
+            // İlk işlem ise sonuç girilen sayıdır.
+            if (counter == 0)
+            {
+                counter++;
+                _result = number;
+            }
+            
+            return new SuccessDataResult<double>(_result);
+        }
 
+        public IDataResult<double> Multiplication(double number)
+        {
+            Operation newOperation = new Multiplication(number);
+            var previousOperation = CalculatePreviousOperation(newOperation);
+            if (!previousOperation.Success)
+            {
+                return new ErrorDataResult<double>(previousOperation.Message);
+            }
+
+            // İlk işlem ise sonuç girilen sayıdır.
+            if (counter == 0)
+            {
+                counter++;
+                _result = number * 1; // çarpmada etkisiz eleman 1'dir.
+            }
+
+            return new SuccessDataResult<double>(_result);
+        }
+
+        public IDataResult<double> Division(double number)
+        {
+            Operation newOperation = new Division(number);
+            var previousOperation = CalculatePreviousOperation(newOperation);
+            if (!previousOperation.Success)
+            {
+                return new ErrorDataResult<double>(previousOperation.Message);
+            }
+
+            // İlk işlem ise sonuç girilen sayıdır.
+            if (counter == 0)
+            {
+                counter++;
+                _result = number;
+            }
+
+            return new SuccessDataResult<double>(_result);
+        }
+
+        public IDataResult<double> Root(double rootInside)
+        {
+            // Run Rules
+            List<IResult> rules = new List<IResult>() { ArgumentOutOfRange(rootInside) };
+            var result = RulesRuner.Run(rules);
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            var A = Math.Sqrt(rootInside);
+            return new SuccessDataResult<double>(A);
+        }
+
+        public IDataResult<double> Root(double rootInside, double rootDegree)
+        {
+            var result = Pow(rootInside, 1 / rootDegree);
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Pow(double number)
+        {
+            var result = Pow(number, 2);
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Pow(double number, double degree)
+        {
+            var result = Math.Pow(number, degree);
+            return new SuccessDataResult<double>(result);
+        }
+
+        public IDataResult<double> Inversion(double number)
+        {
+            var result = 1 / number;
+            return new SuccessDataResult<double>(result);
+        }
+
+        // Rules
+        private IResult ArgumentOutOfRange(double number)
+        {
+            if (number < 0)
+            {
+                return new ErrorResult("Sayı beklenen aralıkta değil.");
+            }
+
+            return new SuccessResult();
+        }
+
+        public IDataResult<double> Equals(double number)
+        {
+            // Get Numbers
+            _previousOperation.number1 = this._result;
+            _previousOperation.number2 = number;
+            counter = 0;
+            // Process And Return
+            var result = _previousOperation.Process();
+            
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+            _result = result.Data;
             return new SuccessDataResult<double>(_result);
         }
     }

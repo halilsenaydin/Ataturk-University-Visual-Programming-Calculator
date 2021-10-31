@@ -40,8 +40,8 @@ namespace CalculatorUI.Forms
             this.btnDel = new System.Windows.Forms.Button();
             this.btnClearInput = new System.Windows.Forms.Button();
             this.btnExponentOfTwo = new System.Windows.Forms.Button();
-            this.btnReverse = new System.Windows.Forms.Button();
-            this.btnInputAndResult = new System.Windows.Forms.Button();
+            this.btnInversion = new System.Windows.Forms.Button();
+            this.btnInputAndResultClear = new System.Windows.Forms.Button();
             this.lblInput = new System.Windows.Forms.Label();
             this.lblResult = new System.Windows.Forms.Label();
             this.groupBoxKeys.SuspendLayout();
@@ -59,8 +59,8 @@ namespace CalculatorUI.Forms
             this.groupBoxKeys.Controls.Add(this.btnDel);
             this.groupBoxKeys.Controls.Add(this.btnClearInput);
             this.groupBoxKeys.Controls.Add(this.btnExponentOfTwo);
-            this.groupBoxKeys.Controls.Add(this.btnReverse);
-            this.groupBoxKeys.Controls.Add(this.btnInputAndResult);
+            this.groupBoxKeys.Controls.Add(this.btnInversion);
+            this.groupBoxKeys.Controls.Add(this.btnInputAndResultClear);
             this.groupBoxKeys.Location = new System.Drawing.Point(12, 89);
             this.groupBoxKeys.Name = "groupBoxKeys";
             this.groupBoxKeys.Size = new System.Drawing.Size(227, 338);
@@ -134,6 +134,7 @@ namespace CalculatorUI.Forms
             this.btnSqrt.TabIndex = 5;
             this.btnSqrt.Text = "x^(1/2)";
             this.btnSqrt.UseVisualStyleBackColor = true;
+            this.btnSqrt.Click += new System.EventHandler(this.btnSqrt_Click);
             // 
             // btnDel
             // 
@@ -162,25 +163,27 @@ namespace CalculatorUI.Forms
             this.btnExponentOfTwo.TabIndex = 1;
             this.btnExponentOfTwo.Text = "x^2";
             this.btnExponentOfTwo.UseVisualStyleBackColor = true;
+            this.btnExponentOfTwo.Click += new System.EventHandler(this.btnExponentOfTwo_Click);
             // 
-            // btnReverse
+            // btnInversion
             // 
-            this.btnReverse.Location = new System.Drawing.Point(6, 74);
-            this.btnReverse.Name = "btnReverse";
-            this.btnReverse.Size = new System.Drawing.Size(49, 46);
-            this.btnReverse.TabIndex = 2;
-            this.btnReverse.Text = "1/x";
-            this.btnReverse.UseVisualStyleBackColor = true;
+            this.btnInversion.Location = new System.Drawing.Point(6, 74);
+            this.btnInversion.Name = "btnInversion";
+            this.btnInversion.Size = new System.Drawing.Size(49, 46);
+            this.btnInversion.TabIndex = 2;
+            this.btnInversion.Text = "1/x";
+            this.btnInversion.UseVisualStyleBackColor = true;
+            this.btnInversion.Click += new System.EventHandler(this.btnInversion_Click);
             // 
-            // btnInputAndResult
+            // btnInputAndResultClear
             // 
-            this.btnInputAndResult.Location = new System.Drawing.Point(116, 22);
-            this.btnInputAndResult.Name = "btnInputAndResult";
-            this.btnInputAndResult.Size = new System.Drawing.Size(49, 46);
-            this.btnInputAndResult.TabIndex = 3;
-            this.btnInputAndResult.Text = "C";
-            this.btnInputAndResult.UseVisualStyleBackColor = true;
-            this.btnInputAndResult.Click += new System.EventHandler(this.btnInputAndResult_Click);
+            this.btnInputAndResultClear.Location = new System.Drawing.Point(116, 22);
+            this.btnInputAndResultClear.Name = "btnInputAndResultClear";
+            this.btnInputAndResultClear.Size = new System.Drawing.Size(49, 46);
+            this.btnInputAndResultClear.TabIndex = 3;
+            this.btnInputAndResultClear.Text = "C";
+            this.btnInputAndResultClear.UseVisualStyleBackColor = true;
+            this.btnInputAndResultClear.Click += new System.EventHandler(this.btnInputAndResultClear_Click);
             // 
             // lblInput
             // 
@@ -222,9 +225,9 @@ namespace CalculatorUI.Forms
         private System.Windows.Forms.Button btnMod;
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.Button btnClearInput;
-        private System.Windows.Forms.Button btnInputAndResult;
+        private System.Windows.Forms.Button btnInputAndResultClear;
         private System.Windows.Forms.Button btnExponentOfTwo;
-        private System.Windows.Forms.Button btnReverse;
+        private System.Windows.Forms.Button btnInversion;
         private System.Windows.Forms.Button btnDivision;
         private System.Windows.Forms.Button btnSqrt;
         private System.Windows.Forms.Button btnMultiplication;
