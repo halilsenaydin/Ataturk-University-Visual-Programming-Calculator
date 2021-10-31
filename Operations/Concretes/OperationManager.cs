@@ -40,6 +40,12 @@ namespace Operations.Concretes
                 return new SuccessResult();
             }
 
+            if (_previousOperation == null) // Önceki işlem null ise.. (Eşittir basıldığı zaman önceki işleme null ataması yapılır.)
+            {
+                _previousOperation = operation;
+                return new SuccessResult();
+            }
+
             // Get Numbers
             _previousOperation.number1 = this._result;
             _previousOperation.number2 = operation.number2;
@@ -131,23 +137,40 @@ namespace Operations.Concretes
             return new SuccessDataResult<double>(_result);
         }
 
+        public IDataResult<double> Equals(double number)
+        {
+            // Get Numbers
+            _previousOperation.number1 = this._result;
+            _previousOperation.number2 = number;
+
+            // Process And Return
+            var result = _previousOperation.Process();
+
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+            _previousOperation = null;
+            _result = result.Data;
+            return new SuccessDataResult<double>(_result);
+        }
+
         public IDataResult<double> Root(double rootInside)
         {
-            // Run Rules
-            List<IResult> rules = new List<IResult>() { ArgumentOutOfRange(rootInside) };
-            var result = RulesRuner.Run(rules);
+            Operation operation = new Rooting(rootInside);
+            var result = operation.Process();
             if (!result.Success)
             {
                 return new ErrorDataResult<double>(result.Message);
             }
 
-            var A = Math.Sqrt(rootInside);
-            return new SuccessDataResult<double>(A);
+            return new SuccessDataResult<double>(result.Data);
         }
 
         public IDataResult<double> Root(double rootInside, double rootDegree)
         {
-            var result = Pow(rootInside, 1 / rootDegree);
+            Operation operation = new Rooting(rootInside, rootDegree);
+            var result = operation.Process();
             if (!result.Success)
             {
                 return new ErrorDataResult<double>(result.Message);
@@ -158,7 +181,8 @@ namespace Operations.Concretes
 
         public IDataResult<double> Pow(double number)
         {
-            var result = Pow(number, 2);
+            Operation operation = new Pow(number);
+            var result = operation.Process();
             if (!result.Success)
             {
                 return new ErrorDataResult<double>(result.Message);
@@ -169,42 +193,26 @@ namespace Operations.Concretes
 
         public IDataResult<double> Pow(double number, double degree)
         {
-            var result = Math.Pow(number, degree);
-            return new SuccessDataResult<double>(result);
-        }
-
-        public IDataResult<double> Inversion(double number)
-        {
-            var result = 1 / number;
-            return new SuccessDataResult<double>(result);
-        }
-
-        // Rules
-        private IResult ArgumentOutOfRange(double number)
-        {
-            if (number < 0)
-            {
-                return new ErrorResult("Sayı beklenen aralıkta değil.");
-            }
-
-            return new SuccessResult();
-        }
-
-        public IDataResult<double> Equals(double number)
-        {
-            // Get Numbers
-            _previousOperation.number1 = this._result;
-            _previousOperation.number2 = number;
-            counter = 0;
-            // Process And Return
-            var result = _previousOperation.Process();
-            
+            Operation operation = new Pow(number, degree);
+            var result = operation.Process();
             if (!result.Success)
             {
                 return new ErrorDataResult<double>(result.Message);
             }
-            _result = result.Data;
-            return new SuccessDataResult<double>(_result);
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Inversion(double number)
+        {
+            Operation operation = new Inversion(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
         }
     }
 }
