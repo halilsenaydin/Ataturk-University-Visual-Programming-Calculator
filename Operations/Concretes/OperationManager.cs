@@ -198,7 +198,7 @@ namespace Operations.Concretes
             if (!result.Success)
             {
                 return new ErrorDataResult<double>(result.Message);
-            }
+            }  
 
             return new SuccessDataResult<double>(result.Data);
         }
