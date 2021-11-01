@@ -1,6 +1,4 @@
-﻿using Entities.Abstracts;
-using Entities.Concretes;
-using Operations.Abstracts;
+﻿using Operations.Abstracts;
 using Operations.Concretes;
 using System;
 using System.Collections.Generic;
@@ -12,21 +10,21 @@ using System.Windows.Forms;
 
 namespace CalculatorUI.Forms
 {
-    public partial class Intro : Form
+    public partial class Scientific : Form
     {
-        public Intro()
+        public Scientific()
         {
             InitializeComponent();
+        }
+
+        private void Scientific_Load(object sender, EventArgs e)
+        {
+            CreateKeys();
         }
 
         private List<string> inputs = new List<string>();
         private List<double> numbers = new List<double>();
         IOperationService operationService = new OperationManager();
-
-        private void Intro_Load(object sender, EventArgs e)
-        {
-            CreateKeys();
-        }
 
         private void CreateKeys()
         {
@@ -36,9 +34,9 @@ namespace CalculatorUI.Forms
             var buttonSize = new Size(49, 46);
 
             int i = 0;
-            for (int x = 6; x <= 116; x+=55)
+            for (int x = 6; x <= 116; x += 55)
             {
-                for (int y = 126; y <= 282; y+=52 )
+                for (int y = 126; y <= 282; y += 52)
                 {
                     Button key = new Button();
                     key.Location = new Point(x, y);
@@ -77,35 +75,89 @@ namespace CalculatorUI.Forms
                 numbers.Add(number);
             }
 
-            return numbers[numbers.Count-1];
+            return numbers[numbers.Count - 1];
         }
 
-        private void btnAddition_Click(object sender, EventArgs e)
+        private void btnSin_Click(object sender, EventArgs e)
         {
-            var number = GetNumber(); // Get Number
-            var result = operationService.Adding(number);
-
-            if (result.Success)
-            {
-                lblInput.Text = String.Format("{0} + ", result.Data);
-                inputs.Clear();
-                lblResult.Text = result.Data.ToString();
-            }
-            
-            else
+            var number = GetNumber();
+            var result = operationService.Sine(number);
+            if (!result.Success)
             {
                 MessageBox.Show(result.Message);
             }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
         }
 
-        private void btnSubtraction_Click(object sender, EventArgs e)
+        private void btnCos_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Cosine(number);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
+        private void btnInputAndResultClear_Click(object sender, EventArgs e)
+        {
+            operationService.ClearResult();
+            inputs.Clear();
+            lblInput.Text = "";
+            lblResult.Text = operationService.GetResult().ToString();
+        }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            inputs.Remove(inputs[inputs.Count - 1]);
+
+            var text = lblInput.Text.Remove(lblInput.Text.Length - 1);
+            lblInput.Text = text;
+        }
+
+        private void btnPow_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+        }
+
+        private void btnLog_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Log10(number);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
+        private void btnDivision_Click(object sender, EventArgs e)
         {
             var number = GetNumber(); // Get Number
-            var result = operationService.Subtraction(number);
+            var result = operationService.Division(number);
 
             if (result.Success)
             {
-                lblInput.Text = String.Format("{0} - ", result.Data);
+                lblInput.Text = String.Format("{0} / ", result.Data);
                 inputs.Clear();
                 lblResult.Text = result.Data.ToString();
             }
@@ -134,14 +186,14 @@ namespace CalculatorUI.Forms
             }
         }
 
-        private void btnDivision_Click(object sender, EventArgs e)
+        private void btnSubtraction_Click(object sender, EventArgs e)
         {
             var number = GetNumber(); // Get Number
-            var result = operationService.Division(number);
+            var result = operationService.Subtraction(number);
 
             if (result.Success)
             {
-                lblInput.Text = String.Format("{0} / ", result.Data);
+                lblInput.Text = String.Format("{0} - ", result.Data);
                 inputs.Clear();
                 lblResult.Text = result.Data.ToString();
             }
@@ -152,54 +204,21 @@ namespace CalculatorUI.Forms
             }
         }
 
-        private void btnInversion_Click(object sender, EventArgs e)
+        private void btnAddition_Click(object sender, EventArgs e)
         {
-            var number = GetNumber();
-            var result = operationService.Inversion(number);
-            if (!result.Success)
+            var number = GetNumber(); // Get Number
+            var result = operationService.Adding(number);
+
+            if (result.Success)
             {
-                MessageBox.Show(result.Message);
+                lblInput.Text = String.Format("{0} + ", result.Data);
+                inputs.Clear();
+                lblResult.Text = result.Data.ToString();
             }
 
             else
             {
-                inputs.Clear();
-                numbers.Add(result.Data);
-                lblResult.Text = result.Data.ToString();
-            }
-        }
-
-        private void btnExponentOfTwo_Click(object sender, EventArgs e)
-        {
-            var number = GetNumber();
-            var result = operationService.Pow(number);
-            if (!result.Success)
-            {
                 MessageBox.Show(result.Message);
-            }
-
-            else
-            {
-                inputs.Clear();
-                numbers.Add(result.Data);
-                lblResult.Text = result.Data.ToString();
-            }
-        }
-
-        private void btnSqrt_Click(object sender, EventArgs e)
-        {
-            var number = GetNumber();
-            var result = operationService.Root(number);
-            if (!result.Success)
-            {
-                MessageBox.Show(result.Message);
-            }
-
-            else
-            {
-                inputs.Clear();
-                numbers.Add(result.Data);
-                lblResult.Text = result.Data.ToString();
             }
         }
 
@@ -217,53 +236,6 @@ namespace CalculatorUI.Forms
             {
                 lblResult.Text = result.Data.ToString();
                 lblInput.Text = result.Data.ToString();
-            }
-        }
-
-        private void btnDel_Click(object sender, EventArgs e)
-        {
-            inputs.Remove(inputs[inputs.Count-1]);
-
-            var text = lblInput.Text.Remove(lblInput.Text.Length-1);
-            lblInput.Text = text;
-        }
-
-        private void btnInputAndResultClear_Click(object sender, EventArgs e)
-        {
-            operationService.ClearResult();
-            inputs.Clear();
-            lblInput.Text = "";
-            lblResult.Text = operationService.GetResult().ToString();
-        }
-
-        private void standardToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Intro form = new Intro();
-            this.Hide();
-            form.Show();
-        }
-
-        private void bilimselToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Scientific form = new Scientific();
-            this.Hide();
-            form.Show();
-        }
-
-        private void btnPercent_Click(object sender, EventArgs e)
-        {
-            var number = GetNumber();
-            var result = operationService.Percent(number);
-            if (!result.Success)
-            {
-                MessageBox.Show(result.Message);
-            }
-
-            else
-            {
-                inputs.Clear();
-                numbers.Add(result.Data);
-                lblResult.Text = result.Data.ToString();
             }
         }
     }

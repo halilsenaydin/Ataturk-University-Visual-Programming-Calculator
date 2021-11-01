@@ -32,5 +32,13 @@ namespace Operations.Abstracts
         IDataResult<double> Pow(double number, double degree); // x^degree
 
         IDataResult<double> Inversion(double number); // 1/x
+
+        IDataResult<double> Sine(double number);
+        IDataResult<double> Cosine(double number);
+
+        IDataResult<double> Percent(double number);
+        IDataResult<double> Log10(double number);
+
+
     }
 }

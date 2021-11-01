@@ -36,7 +36,6 @@ namespace Operations.Concretes
         {
             if (counter == 0) // İlk işlem ise önceki işlem ataması yap.
             {
-                _previousOperation = operation;
                 return new SuccessResult();
             }
 
@@ -206,6 +205,54 @@ namespace Operations.Concretes
         public IDataResult<double> Inversion(double number)
         {
             Operation operation = new Inversion(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Sine(double number)
+        {
+            Operation operation = new Sine(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Cosine(double number)
+        {
+            Operation operation = new Cosine(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Percent(double number)
+        {
+            Operation operation = new Percent(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Log10(double number)
+        {
+            Operation operation = new Log(number);
             var result = operation.Process();
             if (!result.Success)
             {
