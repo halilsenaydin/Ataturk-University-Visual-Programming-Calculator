@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Entities.Concretes
 {
-    public class Sine : Operation
+    public class Tangent : Operation
     {
-        public Sine(double degree) : base(degree) // number2 == degree (true)
+        public Tangent(double degree) : base(degree) // number2 == degree (true)
         {
-            _result = Math.Sin(degree);
+            _result = Math.Tan(degree);
         }
 
         public override IDataResult<double> Process()

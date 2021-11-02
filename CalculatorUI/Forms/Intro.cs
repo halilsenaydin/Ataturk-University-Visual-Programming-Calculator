@@ -19,8 +19,10 @@ namespace CalculatorUI.Forms
             InitializeComponent();
         }
 
-        private List<string> inputs = new List<string>();
-        private List<double> numbers = new List<double>();
+        private List<string> inputs = new List<string>(); // String List.. string to double converting, easier than smashing (10.25)
+        private List<double> numbers = new List<double>(); // İşlem gören tüm sayıları içerir. örneğin 3 + 5 işlemindeki 3 ve 5..
+
+        // Tüm işlemleri içerir. Soyutlama yaptığımı düşünüyorum çünkü kod tekrarını önledim (bir işlem bir kaç form'da çağrılabilir..) ve işlem kurallarını kontrol edeceğim bir sistem kurdum..
         IOperationService operationService = new OperationManager();
 
         private void Intro_Load(object sender, EventArgs e)
@@ -35,6 +37,7 @@ namespace CalculatorUI.Forms
             bilimselToolStripMenuItem.ForeColor = Color.White;
         }
 
+        // Create keys using loop and add in groupbox for use later on.
         private void CreateKeys()
         {
             List<Button> keys = new List<Button>();
@@ -89,6 +92,7 @@ namespace CalculatorUI.Forms
             return numbers[numbers.Count-1];
         }
 
+        // +, -, *, /
         private void btnAddition_Click(object sender, EventArgs e)
         {
             var number = GetNumber(); // Get Number
@@ -161,6 +165,7 @@ namespace CalculatorUI.Forms
             }
         }
 
+        // Operations
         private void btnInversion_Click(object sender, EventArgs e)
         {
             var number = GetNumber();
@@ -211,7 +216,24 @@ namespace CalculatorUI.Forms
                 lblResult.Text = result.Data.ToString();
             }
         }
+        private void btnPercent_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Percent(number);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
 
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
+        // Get Result
         private void btnEquals_Click(object sender, EventArgs e)
         {
             var number = GetNumber();
@@ -229,6 +251,7 @@ namespace CalculatorUI.Forms
             }
         }
 
+        // Take it back
         private void btnDel_Click(object sender, EventArgs e)
         {
             inputs.Remove(inputs[inputs.Count-1]);
@@ -237,6 +260,7 @@ namespace CalculatorUI.Forms
             lblInput.Text = text;
         }
 
+        // Reset All
         private void btnInputAndResultClear_Click(object sender, EventArgs e)
         {
             operationService.ClearResult();
@@ -245,6 +269,7 @@ namespace CalculatorUI.Forms
             lblResult.Text = operationService.GetResult().ToString();
         }
 
+        // Menu Clicks
         private void standardToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Intro form = new Intro();
@@ -257,23 +282,6 @@ namespace CalculatorUI.Forms
             Scientific form = new Scientific();
             this.Hide();
             form.Show();
-        }
-
-        private void btnPercent_Click(object sender, EventArgs e)
-        {
-            var number = GetNumber();
-            var result = operationService.Percent(number);
-            if (!result.Success)
-            {
-                MessageBox.Show(result.Message);
-            }
-
-            else
-            {
-                inputs.Clear();
-                numbers.Add(result.Data);
-                lblResult.Text = result.Data.ToString();
-            }
         }
     }
 }

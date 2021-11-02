@@ -11,7 +11,7 @@ namespace Entities.Concretes
     {
         public Cosine(double degree) : base(degree) // number2 == degree (true)
         {
-            _result = Math.Cosh(degree);
+            _result = Math.Cos(degree);
         }
 
         public override IDataResult<double> Process()

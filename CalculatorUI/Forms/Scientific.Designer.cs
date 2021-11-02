@@ -116,6 +116,7 @@ namespace CalculatorUI.Forms
             this.btnCsc.TabIndex = 20;
             this.btnCsc.Text = "csc";
             this.btnCsc.UseVisualStyleBackColor = false;
+            this.btnCsc.Click += new System.EventHandler(this.btnCsc_Click);
             // 
             // btnSec
             // 
@@ -126,6 +127,7 @@ namespace CalculatorUI.Forms
             this.btnSec.TabIndex = 19;
             this.btnSec.Text = "sec";
             this.btnSec.UseVisualStyleBackColor = false;
+            this.btnSec.Click += new System.EventHandler(this.btnSec_Click);
             // 
             // btnRand
             // 
@@ -218,6 +220,7 @@ namespace CalculatorUI.Forms
             this.btnSqrt.TabIndex = 10;
             this.btnSqrt.Text = "x^(1/2)";
             this.btnSqrt.UseVisualStyleBackColor = false;
+            this.btnSqrt.Click += new System.EventHandler(this.btnSqrt_Click);
             // 
             // btnMultiplication
             // 
@@ -294,6 +297,7 @@ namespace CalculatorUI.Forms
             this.btnCot.TabIndex = 5;
             this.btnCot.Text = "cot";
             this.btnCot.UseVisualStyleBackColor = false;
+            this.btnCot.Click += new System.EventHandler(this.btnCot_Click);
             // 
             // btnDel
             // 
@@ -325,6 +329,7 @@ namespace CalculatorUI.Forms
             this.btnTan.TabIndex = 1;
             this.btnTan.Text = "tan";
             this.btnTan.UseVisualStyleBackColor = false;
+            this.btnTan.Click += new System.EventHandler(this.btnTan_Click);
             // 
             // btnCos
             // 

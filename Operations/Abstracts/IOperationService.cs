@@ -35,6 +35,10 @@ namespace Operations.Abstracts
 
         IDataResult<double> Sine(double number);
         IDataResult<double> Cosine(double number);
+        IDataResult<double> Tangent(double number);
+        IDataResult<double> Cotangent(double number);
+        IDataResult<double> Secant(double number);
+        IDataResult<double> Cosecant(double number);
 
         IDataResult<double> Percent(double number);
         IDataResult<double> Log(double number, double baseValue);

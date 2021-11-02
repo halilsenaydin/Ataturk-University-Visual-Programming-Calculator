@@ -51,7 +51,7 @@ namespace Operations.Concretes
             _previousOperation.number2 = operation.number2;
 
             // Process And Return
-            var result = _previousOperation.Process();
+            var result = _previousOperation.Process(); // Mükemmel soyutlamışım yaa, bir kaç yıl sonra inşallah şey derim; 'Gerçekten bu kodda mükemmel soyutlama yaptığını mı düşünüyorsun lilah :,)'
             if (!result.Success)
             {
                 return new ErrorResult(result.Message);
@@ -61,6 +61,7 @@ namespace Operations.Concretes
             return new SuccessResult();
         }
 
+        // Operations
         public IDataResult<double> Adding(double number)
         {
             Operation newOperation = new Adding(number);
@@ -230,6 +231,52 @@ namespace Operations.Concretes
         public IDataResult<double> Cosine(double number)
         {
             Operation operation = new Cosine(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+        public IDataResult<double> Tangent(double number)
+        {
+            Operation operation = new Tangent(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Cotangent(double number)
+        {
+            Operation operation = new Cotangent(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+        public IDataResult<double> Secant(double number)
+        {
+            Operation operation = new Secant(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Cosecant(double number)
+        {
+            Operation operation = new Cosecant(number);
             var result = operation.Process();
             if (!result.Success)
             {

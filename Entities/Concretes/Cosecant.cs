@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Entities.Concretes
 {
-    public class Sine : Operation
+    public class Cosecant : Operation
     {
-        public Sine(double degree) : base(degree) // number2 == degree (true)
+        public Cosecant(double degree) : base(degree) // number2 == degree (true)
         {
-            _result = Math.Sin(degree);
+            _result = 1/Math.Sin(degree);
         }
 
         public override IDataResult<double> Process()
