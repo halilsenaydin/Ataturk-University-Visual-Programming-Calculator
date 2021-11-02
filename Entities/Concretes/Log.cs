@@ -9,9 +9,9 @@ namespace Entities.Concretes
 {
     public class Log : Operation
     {
-        public Log(double number) : base(number) // number2 == number (true)
+        public Log(double number, double baseValue) : base(number)
         {
-            _result = Math.Log10(number);
+            _result = Math.Log(number, baseValue);
         }
 
         public override IDataResult<double> Process()

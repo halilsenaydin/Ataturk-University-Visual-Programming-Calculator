@@ -37,7 +37,7 @@ namespace Operations.Abstracts
         IDataResult<double> Cosine(double number);
 
         IDataResult<double> Percent(double number);
-        IDataResult<double> Log10(double number);
+        IDataResult<double> Log(double number, double baseValue);
 
 
     }

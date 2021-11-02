@@ -34,8 +34,9 @@ namespace Operations.Concretes
 
         public IResult CalculatePreviousOperation(Operation operation)
         {
-            if (counter == 0) // İlk işlem ise önceki işlem ataması yap.
+            if (counter == 0) // İlk işlem ise önceki işlem, ilk gelen operation'dur.
             {
+                _previousOperation = operation;
                 return new SuccessResult();
             }
 
@@ -250,9 +251,9 @@ namespace Operations.Concretes
             return new SuccessDataResult<double>(result.Data);
         }
 
-        public IDataResult<double> Log10(double number)
+        public IDataResult<double> Log(double number, double baseValue)
         {
-            Operation operation = new Log(number);
+            Operation operation = new Log(number, baseValue);
             var result = operation.Process();
             if (!result.Success)
             {

@@ -26,6 +26,13 @@ namespace CalculatorUI.Forms
         private void Intro_Load(object sender, EventArgs e)
         {
             CreateKeys();
+            
+            // Set Color Of Menu
+            standardToolStripMenuItem.BackColor = Color.Black;
+            standardToolStripMenuItem.ForeColor = Color.White;
+
+            bilimselToolStripMenuItem.BackColor = Color.Black;
+            bilimselToolStripMenuItem.ForeColor = Color.White;
         }
 
         private void CreateKeys()
@@ -46,6 +53,8 @@ namespace CalculatorUI.Forms
                     key.Visible = true;
                     key.Text = keyValues[i].ToString();
                     key.Click += new System.EventHandler(this.KeyClick);
+                    key.BackColor = Color.Black;
+                    key.ForeColor = Color.White;
 
                     groupBoxKeys.Controls.Add(key);
 

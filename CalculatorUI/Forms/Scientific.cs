@@ -20,6 +20,13 @@ namespace CalculatorUI.Forms
         private void Scientific_Load(object sender, EventArgs e)
         {
             CreateKeys();
+
+            // Set Color Of Menu
+            standardToolStripMenuItem.BackColor = Color.Black;
+            standardToolStripMenuItem.ForeColor = Color.White;
+
+            bilimselToolStripMenuItem.BackColor = Color.Black;
+            bilimselToolStripMenuItem.ForeColor = Color.White;
         }
 
         private List<string> inputs = new List<string>();
@@ -44,6 +51,8 @@ namespace CalculatorUI.Forms
                     key.Visible = true;
                     key.Text = keyValues[i].ToString();
                     key.Click += new System.EventHandler(this.KeyClick);
+                    key.BackColor = Color.Black;
+                    key.ForeColor = Color.White;
 
                     groupBoxKeys.Controls.Add(key);
 
@@ -128,15 +137,10 @@ namespace CalculatorUI.Forms
             lblInput.Text = text;
         }
 
-        private void btnPow_Click(object sender, EventArgs e)
+        private void btnLog10_Click(object sender, EventArgs e)
         {
             var number = GetNumber();
-        }
-
-        private void btnLog_Click(object sender, EventArgs e)
-        {
-            var number = GetNumber();
-            var result = operationService.Log10(number);
+            var result = operationService.Log(number, 10);
             if (!result.Success)
             {
                 MessageBox.Show(result.Message);
@@ -237,6 +241,25 @@ namespace CalculatorUI.Forms
                 lblResult.Text = result.Data.ToString();
                 lblInput.Text = result.Data.ToString();
             }
+        }
+
+        private void linkLblLilah_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.linkedin.com/in/halil-ibrahim-şenaydın-6b50331b8"); // Go My LinkdIn Account :)
+        }
+
+        private void standardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Intro form = new Intro();
+            this.Hide();
+            form.Show();
+        }
+
+        private void bilimselToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Scientific form = new Scientific();
+            this.Hide();
+            form.Show();
         }
     }
 }
