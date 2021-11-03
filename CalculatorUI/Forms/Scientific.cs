@@ -1,5 +1,6 @@
 ﻿using Operations.Abstracts;
 using Operations.Concretes;
+using Operations.Constants;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -71,6 +72,15 @@ namespace CalculatorUI.Forms
             var number = button.Text;
             lblInput.Text += number;
             inputs.Add(number);
+        }
+
+        private void btnE_Click(object sender, EventArgs e)
+        {
+            Button button = sender as Button; // Get Button Reference
+
+            var E = MathConstants.E.ToString();
+            lblInput.Text += E;
+            inputs.Add(E);
         }
 
         double GetNumber() // Girilen sayıları uygun formatda al ve işlenebilecek hale çevir.
@@ -225,6 +235,91 @@ namespace CalculatorUI.Forms
             }
         }
 
+        private void btnLog2_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Log(number, 2);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
+        private void btnLn_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Log(number, MathConstants.E);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
+        private void btnAbs_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Abs(number);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
+        private void btnFactorial_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Factorial(number);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
+        private void btnRand_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber();
+            var result = operationService.Rand(number);
+            if (!result.Success)
+            {
+                MessageBox.Show(result.Message);
+            }
+
+            else
+            {
+                inputs.Clear();
+                numbers.Add(result.Data);
+                lblResult.Text = result.Data.ToString();
+            }
+        }
+
         // Reset All
         private void btnInputAndResultClear_Click(object sender, EventArgs e)
         {
@@ -316,6 +411,24 @@ namespace CalculatorUI.Forms
             }
         }
 
+        private void btnMod_Click(object sender, EventArgs e)
+        {
+            var number = GetNumber(); // Get Number
+            var result = operationService.Mod(number);
+
+            if (result.Success)
+            {
+                lblInput.Text = String.Format("{0} % ", result.Data);
+                inputs.Clear();
+                lblResult.Text = result.Data.ToString();
+            }
+
+            else
+            {
+                MessageBox.Show(result.Message);
+            }
+        }
+
         // Get Result
         private void btnEquals_Click(object sender, EventArgs e)
         {
@@ -334,10 +447,10 @@ namespace CalculatorUI.Forms
             }
         }
 
-        // Go My LinkdIn Account :)
+        // Route to My LinkedIn Account :)
         private void linkLblLilah_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.linkedin.com/in/halil-ibrahim-şenaydın-6b50331b8"); // Go My LinkdIn Account :)
+            System.Diagnostics.Process.Start("https://www.linkedin.com/in/halil-ibrahim-şenaydın-6b50331b8");
         }
 
         // Menu Clicks

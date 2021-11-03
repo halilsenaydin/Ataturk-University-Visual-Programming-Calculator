@@ -138,6 +138,7 @@ namespace CalculatorUI.Forms
             this.btnRand.TabIndex = 18;
             this.btnRand.Text = "rand";
             this.btnRand.UseVisualStyleBackColor = false;
+            this.btnRand.Click += new System.EventHandler(this.btnRand_Click);
             // 
             // btnLog2
             // 
@@ -148,6 +149,7 @@ namespace CalculatorUI.Forms
             this.btnLog2.TabIndex = 17;
             this.btnLog2.Text = "log2";
             this.btnLog2.UseVisualStyleBackColor = false;
+            this.btnLog2.Click += new System.EventHandler(this.btnLog2_Click);
             // 
             // btnAbs
             // 
@@ -158,6 +160,7 @@ namespace CalculatorUI.Forms
             this.btnAbs.TabIndex = 16;
             this.btnAbs.Text = "| x |";
             this.btnAbs.UseVisualStyleBackColor = false;
+            this.btnAbs.Click += new System.EventHandler(this.btnAbs_Click);
             // 
             // btnMod
             // 
@@ -168,6 +171,7 @@ namespace CalculatorUI.Forms
             this.btnMod.TabIndex = 15;
             this.btnMod.Text = "mod";
             this.btnMod.UseVisualStyleBackColor = false;
+            this.btnMod.Click += new System.EventHandler(this.btnMod_Click);
             // 
             // btnFactorial
             // 
@@ -178,6 +182,7 @@ namespace CalculatorUI.Forms
             this.btnFactorial.TabIndex = 14;
             this.btnFactorial.Text = "x!";
             this.btnFactorial.UseVisualStyleBackColor = false;
+            this.btnFactorial.Click += new System.EventHandler(this.btnFactorial_Click);
             // 
             // btnLn
             // 
@@ -188,6 +193,7 @@ namespace CalculatorUI.Forms
             this.btnLn.TabIndex = 13;
             this.btnLn.Text = "ln";
             this.btnLn.UseVisualStyleBackColor = false;
+            this.btnLn.Click += new System.EventHandler(this.btnLn_Click);
             // 
             // btnLog10
             // 
@@ -210,6 +216,7 @@ namespace CalculatorUI.Forms
             this.btnE.TabIndex = 11;
             this.btnE.Text = "e";
             this.btnE.UseVisualStyleBackColor = false;
+            this.btnE.Click += new System.EventHandler(this.btnE_Click);
             // 
             // btnSqrt
             // 

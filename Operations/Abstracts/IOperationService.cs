@@ -18,11 +18,12 @@ namespace Operations.Abstracts
         IResult CalculatePreviousOperation(Operation operation);
         IDataResult<double> Equals(double number);
 
-        // Four Operations (+, -, *, / )
+        // Four Operations (+, -, *, /, % )
         IDataResult<double> Adding(double number);
         IDataResult<double> Subtraction(double number);
         IDataResult<double> Multiplication(double number);
         IDataResult<double> Division(double number);
+        IDataResult<double> Mod(double number);
 
         // Complex Operations
         IDataResult<double> Root(double rootInside); // x^(1/2)
@@ -42,7 +43,8 @@ namespace Operations.Abstracts
 
         IDataResult<double> Percent(double number);
         IDataResult<double> Log(double number, double baseValue);
-
-
+        IDataResult<double> Abs(double number);
+        IDataResult<double> Factorial(double number);
+        IDataResult<double> Rand(double number);
     }
 }

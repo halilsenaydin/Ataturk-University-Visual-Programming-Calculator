@@ -138,6 +138,25 @@ namespace Operations.Concretes
             return new SuccessDataResult<double>(_result);
         }
 
+        public IDataResult<double> Mod(double number)
+        {
+            Operation newOperation = new Mod(number);
+            var previousOperation = CalculatePreviousOperation(newOperation);
+            if (!previousOperation.Success)
+            {
+                return new ErrorDataResult<double>(previousOperation.Message);
+            }
+
+            // İlk işlem ise sonuç girilen sayıdır.
+            if (counter == 0)
+            {
+                counter++;
+                _result = number;
+            }
+
+            return new SuccessDataResult<double>(_result);
+        }
+
         public IDataResult<double> Equals(double number)
         {
             // Get Numbers
@@ -301,6 +320,42 @@ namespace Operations.Concretes
         public IDataResult<double> Log(double number, double baseValue)
         {
             Operation operation = new Log(number, baseValue);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Abs(double number)
+        {
+            Operation operation = new Absolute(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Factorial(double number)
+        {
+            Operation operation = new Factorial(number);
+            var result = operation.Process();
+            if (!result.Success)
+            {
+                return new ErrorDataResult<double>(result.Message);
+            }
+
+            return new SuccessDataResult<double>(result.Data);
+        }
+
+        public IDataResult<double> Rand(double number)
+        {
+            Operation operation = new Rand(number);
             var result = operation.Process();
             if (!result.Success)
             {
