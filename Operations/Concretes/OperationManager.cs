@@ -16,6 +16,11 @@ namespace Operations.Concretes
         private Operation _previousOperation { get; set; }
         private int counter { get; set; }
 
+        public OperationManager()
+        {
+            _result = 0;
+        }
+
         public double GetResult() // Encapsulation
         {
             return _result;
@@ -159,17 +164,16 @@ namespace Operations.Concretes
 
         public IDataResult<double> Equals(double number)
         {
-            // Get Numbers
+            // Process previous operation and return result
             _previousOperation.number1 = this._result;
             _previousOperation.number2 = number;
-
-            // Process And Return
             var result = _previousOperation.Process();
 
             if (!result.Success)
             {
                 return new ErrorDataResult<double>(result.Message);
             }
+
             _previousOperation = null;
             _result = result.Data;
             return new SuccessDataResult<double>(_result);

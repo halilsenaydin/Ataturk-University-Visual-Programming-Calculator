@@ -17,6 +17,10 @@ namespace CalculatorUI.Forms
         {
             InitializeComponent();
         }
+        ~Scientific() // Destructor
+        {
+            this.Close();
+        }
 
         private void Scientific_Load(object sender, EventArgs e)
         {
@@ -458,6 +462,7 @@ namespace CalculatorUI.Forms
         {
             Intro form = new Intro();
             this.Hide();
+            GC.Collect(); // Garbage Collector.. C# prog. dilinin bellek yönetim sınıfıdır..
             form.Show();
         }
 
@@ -465,6 +470,7 @@ namespace CalculatorUI.Forms
         {
             Scientific form = new Scientific();
             this.Hide();
+            GC.Collect(); // Garbage Collector.. C# prog. dilinin bellek yönetim sınıfıdır..
             form.Show();
         }
     }

@@ -15,10 +15,20 @@ namespace CalculatorUI
         [STAThread]
         static void Main()
         {
+
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Intro());
+
+            // Kodlarýmý try catch ile doldurmak istemedim..
+            // Bu sorunu ileride daha iyi bir þekilde çözebileceðime inanýyorum ama þu an için kodlarýmda okunabilirliði ön plana çýkarmak istiyorum..
+            try
+            {
+                Application.Run(new Intro());
+            }
+
+            catch (Exception){}
+
         }
     }
 }

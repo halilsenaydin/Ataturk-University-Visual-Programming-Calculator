@@ -19,6 +19,11 @@ namespace CalculatorUI.Forms
             InitializeComponent();
         }
 
+        ~Intro() // Destructor
+        {
+            this.Close();
+        }
+
         private List<string> inputs = new List<string>(); // String List.. string to double converting, easier than smashing (10.25)
         private List<double> numbers = new List<double>(); // İşlem gören tüm sayıları içerir. örneğin 3 + 5 işlemindeki 3 ve 5..
 
@@ -88,8 +93,8 @@ namespace CalculatorUI.Forms
                 var number = Convert.ToDouble(numberText);
                 numbers.Add(number);
             }
-
-            return numbers[numbers.Count-1];
+             
+            return numbers[numbers.Count - 1];
         }
 
         // +, -, *, /
@@ -274,6 +279,7 @@ namespace CalculatorUI.Forms
         {
             Intro form = new Intro();
             this.Hide();
+            GC.Collect(); // Garbage Collector.. C# prog. dilinin bellek yönetim sınıfıdır..
             form.Show();
         }
 
@@ -281,6 +287,7 @@ namespace CalculatorUI.Forms
         {
             Scientific form = new Scientific();
             this.Hide();
+            GC.Collect(); // Garbage Collector.. C# prog. dilinin bellek yönetim sınıfıdır..
             form.Show();
         }
     }
