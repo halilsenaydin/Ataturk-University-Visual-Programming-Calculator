@@ -29,6 +29,7 @@ namespace CalculatorUI.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Scientific));
             this.groupBoxKeys = new System.Windows.Forms.GroupBox();
             this.linkLblLilah = new System.Windows.Forms.LinkLabel();
             this.btnCsc = new System.Windows.Forms.Button();
@@ -413,6 +414,7 @@ namespace CalculatorUI.Forms
             this.Controls.Add(this.lblInput);
             this.Controls.Add(this.groupBoxKeys);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Scientific";
             this.Text = "Scientific";
