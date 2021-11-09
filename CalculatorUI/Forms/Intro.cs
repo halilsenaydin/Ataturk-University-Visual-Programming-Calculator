@@ -42,7 +42,7 @@ namespace CalculatorUI.Forms
             bilimselToolStripMenuItem.ForeColor = Color.White;
 
             MessageBoxButtons buttons = MessageBoxButtons.OK;
-            MessageBox.Show("Hesap makinemin arayüzünü çok iyi yapamadım, uğraşamadım daha doğrusu. \n" +
+            MessageBox.Show("Hesap makinemin arayüzünü çok iyi yapamadım :( \n" +
                 "Ama kodlarımın kaliteli olduğuna eminim. \n" +
                 "OOP'nin gerektirdiği gibi kodladım ve soyutlamaları doğru yerde kullandığımı düşünüyorum..",
                 "lilah Calculator - Uygulamam Hakkında", buttons, MessageBoxIcon.Information);
